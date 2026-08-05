@@ -1,0 +1,19 @@
+services:
+  panel:
+    build: .
+    image: tpanel:latest
+    container_name: tpanel
+    restart: unless-stopped
+    ports:
+      - "8080:8080"        # 管理面板
+      - "9000:9000"        # agent 控制端口
+      - "8090:8090"        # HTTP 域名隧道端口（可按需改为 80:8090）
+      - "20000-29999:20000-29999" # TCP 隧道自动分配端口范围
+    volumes:
+      - ./data:/app/data   # 配置与日志持久化
+    environment:
+      # 以下环境变量仅在首次启动（数据文件不存在时）生效
+      - PANEL_USER=admin
+      - PANEL_PASSWORD=admin123
+      - TUNNEL_PORT_START=20000
+      - TUNNEL_PORT_END=29999

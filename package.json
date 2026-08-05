@@ -1,0 +1,14 @@
+{
+  "name": "tpanel",
+  "version": "0.1.0",
+  "description": "内网穿透面板（参照 nps/frps），零依赖、Docker 一键部署",
+  "main": "server/index.js",
+  "scripts": {
+    "start": "node server/index.js",
+    "agent": "node agent/index.js"
+  },
+  "engines": {
+    "node": ">=16"
+  },
+  "license": "MIT"
+}

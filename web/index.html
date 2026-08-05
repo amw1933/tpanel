@@ -1,0 +1,74 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>内网穿透面板</title>
+  <link rel="stylesheet" href="/style.css" />
+</head>
+<body>
+  <div id="login-view" class="login-view hidden">
+    <div class="login-card">
+      <div class="login-logo">
+        <svg viewBox="0 0 48 48" width="56" height="56" fill="none">
+          <path d="M8 8h14v14H8zM26 8h14v14H26zM8 26h14v14H8zM26 26h14v14H26z" fill="#4f8cff" opacity="0.85"/>
+          <circle cx="30" cy="18" r="3" fill="#7ce38b"/>
+        </svg>
+      </div>
+      <h1>内网穿透面板</h1>
+      <p class="login-sub">参照 nps / frps 的轻量部署方案</p>
+      <form id="login-form">
+        <label>用户名
+          <input id="login-user" type="text" autocomplete="username" required />
+        </label>
+        <label>密码
+          <input id="login-pass" type="password" autocomplete="current-password" required />
+        </label>
+        <button type="submit" class="btn primary block">登 录</button>
+      </form>
+      <p class="login-tip">默认账号 admin / admin123，首次登录后请及时修改密码</p>
+    </div>
+  </div>
+
+  <div id="app-view" class="app hidden">
+    <aside class="sidebar">
+      <div class="brand">
+        <svg viewBox="0 0 48 48" width="30" height="30" fill="none">
+          <path d="M8 8h14v14H8zM26 8h14v14H26zM8 26h14v14H8zM26 26h14v14H26z" fill="#4f8cff" opacity="0.85"/>
+          <circle cx="30" cy="18" r="3" fill="#7ce38b"/>
+        </svg>
+        <span>穿透面板</span>
+      </div>
+      <nav>
+        <a href="#" data-view="overview" class="active">概览</a>
+        <a href="#" data-view="clients">客户端</a>
+        <a href="#" data-view="tunnels">隧道</a>
+        <a href="#" data-view="logs">日志</a>
+        <a href="#" data-view="settings">设置</a>
+      </nav>
+      <div class="sidebar-foot">
+        <div class="srv-status"><span class="dot" id="srv-dot"></span> 服务运行中</div>
+        <div id="srv-version"></div>
+      </div>
+    </aside>
+
+    <main class="main">
+      <header class="topbar">
+        <h2 id="view-title">概览</h2>
+        <div class="topbar-right">
+          <span class="user-chip" id="user-chip"></span>
+          <button class="btn ghost" id="logout-btn">退出</button>
+        </div>
+      </header>
+      <section id="content" class="content"></section>
+    </main>
+  </div>
+
+  <div id="modal-mask" class="modal-mask hidden">
+    <div class="modal" id="modal"></div>
+  </div>
+  <div id="toast" class="toast hidden"></div>
+
+  <script src="/app.js"></script>
+</body>
+</html>
