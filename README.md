@@ -52,20 +52,22 @@ docker compose -f docker-compose.hub.yml up -d
 
 ```bash
 docker pull amw1933/tpanel:latest
-docker run -d --name tpanel --restart unless-stopped \
-  -p 8080:8080 -p 9000:9000 -p 8090:8090 -p 20000-29999:20000-29999 \
+docker run -d --name tpanel --restart unless-stopped --network host \
   -v $(pwd)/data:/app/data \
+  -e PANEL_PORT=8080 -e AGENT_PORT=9000 -e VHOST_PORT=8090 \
   -e PANEL_USER=admin -e PANEL_PASSWORD=你的密码 \
   amw1933/tpanel:latest
 ```
+
+> 使用 host 网络模式直接用宿主机端口。不要用 `-p 20000-29999:20000-29999` 大范围映射，Docker 为每个端口生成 iptables 规则会非常慢甚至卡死。
 
 也可以直接用镜像构建：
 
 ```bash
 docker build -t tpanel .
-docker run -d --name tpanel --restart unless-stopped \
-  -p 8080:8080 -p 9000:9000 -p 8090:8090 -p 20000-29999:20000-29999 \
+docker run -d --name tpanel --restart unless-stopped --network host \
   -v $(pwd)/data:/app/data \
+  -e PANEL_PORT=8080 -e AGENT_PORT=9000 -e VHOST_PORT=8090 \
   -e PANEL_USER=admin -e PANEL_PASSWORD=你的密码 \
   tpanel
 ```

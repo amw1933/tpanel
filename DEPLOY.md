@@ -36,17 +36,18 @@ services:
     image: amw1933/tpanel:latest
     container_name: tpanel
     restart: unless-stopped
-    ports:
-      - "8080:8080"              # 管理面板
-      - "9000:9000"              # agent 控制端口
-      - "8090:8090"              # HTTP 域名隧道端口
-      - "20000-29999:20000-29999" # TCP 隧道自动分配端口范围
+    network_mode: host
     volumes:
       - ./data:/app/data
     environment:
+      - PANEL_PORT=8080
+      - AGENT_PORT=9000
+      - VHOST_PORT=8090
       - PANEL_USER=admin
       - PANEL_PASSWORD=admin123   # 仅首次启动生效，登录后请在面板修改
 ```
+
+> 使用 host 网络模式：容器直接用宿主机端口，**不要**用 `ports` 映射 `20000-29999:20000-29999` 这种写法，那会让 Docker 生成上万条 iptables 规则导致卡死。
 
 启动：
 

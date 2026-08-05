@@ -4,15 +4,15 @@ services:
     image: tpanel:latest
     container_name: tpanel
     restart: unless-stopped
-    ports:
-      - "8080:8080"        # 管理面板
-      - "9000:9000"        # agent 控制端口
-      - "8090:8090"        # HTTP 域名隧道端口（可按需改为 80:8090）
-      - "20000-29999:20000-29999" # TCP 隧道自动分配端口范围
+    # host 网络：直接用宿主机端口，避免 20000-29999 大范围端口映射导致 Docker 卡死
+    network_mode: host
     volumes:
       - ./data:/app/data   # 配置与日志持久化
     environment:
       # 以下环境变量仅在首次启动（数据文件不存在时）生效
+      - PANEL_PORT=8080
+      - AGENT_PORT=9000
+      - VHOST_PORT=8090
       - PANEL_USER=admin
       - PANEL_PASSWORD=admin123
       - TUNNEL_PORT_START=20000
