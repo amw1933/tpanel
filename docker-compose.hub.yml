@@ -1,0 +1,17 @@
+# 直接拉取 Docker Hub 镜像的部署方式（无需本地构建）
+# 用法: docker compose -f docker-compose.hub.yml up -d
+services:
+  panel:
+    image: amw1933/tpanel:latest
+    container_name: tpanel
+    restart: unless-stopped
+    ports:
+      - "8080:8080"        # 管理面板
+      - "9000:9000"        # agent 控制端口
+      - "8090:8090"        # HTTP 域名隧道端口
+      - "20000-29999:20000-29999" # TCP 隧道自动分配端口范围
+    volumes:
+      - ./data:/app/data
+    environment:
+      - PANEL_USER=admin
+      - PANEL_PASSWORD=admin123

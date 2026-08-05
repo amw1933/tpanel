@@ -40,6 +40,25 @@ docker compose up -d --build
 
 然后打开 `http://服务器IP:8080`，默认账号 `admin / admin123`（登录后请立即修改密码）。
 
+### 直接拉取 Docker Hub 镜像（推荐）
+
+镜像已发布到 Docker Hub（多架构：amd64 / arm64 / armv7），无需本地构建：
+
+```bash
+docker compose -f docker-compose.hub.yml up -d
+```
+
+或直接运行：
+
+```bash
+docker pull amw1933/tpanel:latest
+docker run -d --name tpanel --restart unless-stopped \
+  -p 8080:8080 -p 9000:9000 -p 8090:8090 -p 20000-29999:20000-29999 \
+  -v $(pwd)/data:/app/data \
+  -e PANEL_USER=admin -e PANEL_PASSWORD=你的密码 \
+  amw1933/tpanel:latest
+```
+
 也可以直接用镜像构建：
 
 ```bash
